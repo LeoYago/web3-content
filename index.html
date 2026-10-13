@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web3 Content — Open infrastructure for digital access rights</title>
+<meta name="description" content="Web3 Content is an open, interoperable and privacy-conscious protocol to issue, verify and recognise access rights to cultural content across platforms and venues. A WEB3HUB project, Politecnico di Milano.">
+<meta name="theme-color" content="#05080d">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Web3 Content">
+<meta property="og:title" content="Web3 Content — Access rights that travel across platforms">
+<meta property="og:description" content="Open infrastructure for digital access rights. An open, interoperable and privacy-conscious protocol for cultural content, online and in physical venues.">
+<meta property="og:image" content="/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Web3 Content — Open infrastructure for digital access rights">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Web3 Content — Access rights that travel across platforms">
+<meta name="twitter:description" content="Open infrastructure for digital access rights to cultural content. A WEB3HUB · Politecnico di Milano project.">
+<meta name="twitter:image" content="/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2305080d'/%3E%3Crect x='6.5' y='9.5' width='19' height='13' rx='3' fill='none' stroke='%235eead4' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='16' r='2.2' fill='%235eead4'/%3E%3Cpath d='M16.5 14h5M16.5 18h3.5' stroke='%235eead4' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap"></noscript>
+<script>document.documentElement.classList.add('js');</script>
+<style>
+:root{
+  --bg:#05080d;
+  --bg-1:#090e15;
+  --line:rgba(170,195,225,.09);
+  --line-2:rgba(170,195,225,.16);
+  --line-3:rgba(170,195,225,.28);
+  --fg:#edf2f7;
+  --fg-2:#a9b5c3;
+  --fg-3:#7f8c9d;
+  --accent:#5eead4;
+  --accent-ink:#03120f;
+  --accent-soft:rgba(94,234,212,.12);
+  --font-sans:"Inter Tight",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --max:1280px;
+  --pad:clamp(20px,4.5vw,64px);
+  --nav-h:72px;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+@supports (overflow:clip){body{overflow-x:clip}}
+img,svg,canvas{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,dl,dd{margin:0}
+ul,ol{padding:0;list-style:none}
+::selection{background:var(--accent);color:var(--accent-ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--accent);color:var(--accent-ink);padding:10px 14px;border-radius:8px;font-weight:500;text-decoration:none}
+.skip:focus{top:12px}
+.wrap{position:relative;z-index:1;max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+
+/* progress */
+.progress{position:fixed;top:0;left:0;right:0;height:1px;z-index:120;pointer-events:none}
+.progress span{display:block;height:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(0);opacity:.8}
+
+/* nav */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:110;height:var(--nav-h);transition:background .5s var(--ease),border-color .5s var(--ease);border-bottom:1px solid transparent}
+.site-header.scrolled{background:rgba(5,8,13,.78);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);border-bottom-color:var(--line)}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;font-weight:500;letter-spacing:-.015em;font-size:17px;white-space:nowrap}
+.brand .by{display:flex;align-items:center;gap:14px}
+.brand .by::before{content:"";width:1px;height:16px;background:var(--line-3)}
+.brand .by img{height:11px;width:auto;opacity:.62}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{position:relative;display:block;padding:8px 12px;font-size:14.5px;color:var(--fg-2);text-decoration:none;transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:12px;right:12px;bottom:4px;height:1px;background:var(--fg);transform:scaleX(0);transform-origin:0 50%;transition:transform .45s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:var(--fg)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-cta{margin-left:16px}
+.menu-btn{display:none;width:44px;height:44px;border:1px solid var(--line-2);border-radius:50%;background:transparent;color:var(--fg);cursor:pointer;align-items:center;justify-content:center}
+.menu-btn span,.menu-btn span::before{display:block;width:16px;height:1.5px;background:currentColor;position:relative;transition:transform .35s var(--ease)}
+.menu-btn span{transform:translateY(-3px)}
+.menu-btn span::before{content:"";position:absolute;left:0;top:6px}
+.menu-btn[aria-expanded="true"] span{transform:translateY(0) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span::before{transform:translateY(-6px) rotate(-90deg)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 22px;border-radius:999px;font-size:15px;font-weight:500;text-decoration:none;border:1px solid var(--line-3);color:var(--fg);transition:border-color .3s,background .3s,color .3s;white-space:nowrap}
+.btn:hover{border-color:var(--fg);background:rgba(255,255,255,.03)}
+.btn svg{width:15px;height:15px;transition:transform .4s var(--ease)}
+.btn:hover svg{transform:translateX(3px)}
+.btn-primary{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.btn-primary:hover{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn-sm{height:40px;padding:0 18px;font-size:14px}
+
+/* sections */
+section{position:relative;z-index:1}
+.section{padding:clamp(96px,12vw,176px) 0}
+.section + .section{border-top:1px solid var(--line)}
+.sec{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:clamp(24px,4vw,64px)}
+.sec-label{font-size:14.5px;color:var(--fg-3);padding-top:.9em}
+.sec-label span{position:sticky;top:calc(var(--nav-h) + 32px);display:block}
+.h2{font-size:clamp(34px,4.6vw,60px);line-height:1.04;letter-spacing:-.035em;font-weight:400;max-width:18ch;text-wrap:balance}
+.h2 .dim{color:var(--fg-3)}
+.lead{font-size:clamp(18px,1.55vw,21px);line-height:1.55;color:var(--fg-2);max-width:56ch;margin-top:32px;font-weight:300}
+.lead strong{color:var(--fg);font-weight:400}
+.rows{margin-top:clamp(48px,6vw,80px);border-top:1px solid var(--line)}
+.rows > li{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px;padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.rows h3{font-size:clamp(19px,1.6vw,22px);font-weight:400;letter-spacing:-.02em;line-height:1.25}
+.rows p{color:var(--fg-2);font-size:16.5px;font-weight:300}
+.cols{display:grid;gap:clamp(24px,3vw,48px);margin-top:clamp(48px,6vw,80px)}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.cols-2{grid-template-columns:repeat(2,1fr)}
+.cols > *{padding-top:22px;border-top:1px solid var(--line-2)}
+.cols h3{font-size:clamp(19px,1.6vw,22px);font-weight:400;letter-spacing:-.02em;line-height:1.25;margin-bottom:10px}
+.cols p{color:var(--fg-2);font-size:16.5px;font-weight:300}
+
+/* reveal */
+.js .reveal{opacity:0;transform:translateY(16px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--i,0) * 90ms)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* hero */
+.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h) + 40px) 0 0;overflow:hidden}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 55% 65% at 18% 52%,rgba(5,8,13,.9),rgba(5,8,13,.5) 50%,transparent 78%),linear-gradient(180deg,transparent 72%,var(--bg))}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.hero h1{font-size:clamp(46px,7.6vw,116px);line-height:.97;letter-spacing:-.048em;font-weight:400;max-width:11.5ch;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.js .hero h1 .w{display:inline-block;opacity:0;transform:translateY(.3em);filter:blur(6px);animation:rise 1.1s var(--ease) forwards;animation-delay:calc(100ms + var(--i) * 70ms)}
+@keyframes rise{to{opacity:1;transform:none;filter:none}}
+.hero-foot{display:grid;gap:36px;margin-top:clamp(36px,5vh,56px);max-width:620px}
+.tagline{font-size:clamp(17px,1.4vw,19.5px);line-height:1.6;color:var(--fg-2);max-width:46ch;font-weight:300}
+.tagline strong{display:block;color:var(--fg);font-weight:400;margin-bottom:6px;letter-spacing:-.01em}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.js .hero .fade{opacity:0;transform:translateY(12px);animation:rise 1s var(--ease) forwards}
+.js .hero .d1{animation-delay:.7s}.js .hero .d2{animation-delay:.85s}.js .hero .d3{animation-delay:1.05s}
+.credits{position:relative;z-index:2;margin-top:clamp(56px,10vh,120px);border-top:1px solid var(--line)}
+.credits .wrap{display:flex;align-items:center;gap:clamp(24px,4vw,56px);padding-top:28px;padding-bottom:30px;flex-wrap:wrap}
+.credits p{font-size:13.5px;color:var(--fg-3)}
+
+/* logos */
+.logos{display:flex;align-items:center;gap:clamp(24px,3.5vw,48px);flex-wrap:wrap}
+.logos img{opacity:.78;transition:opacity .4s var(--ease)}
+.logos a{display:block}
+.logos a:hover img{opacity:1}
+.logos .sep{width:1px;height:32px;background:var(--line-2)}
+.logo-w3h{height:15px;width:auto}
+.logo-polimi{height:46px;width:auto}
+.logo-gsom{height:42px;width:auto}
+
+/* problem */
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(48px,6vw,80px);border-top:1px solid var(--line)}
+.outcomes li{padding:24px 24px 0 0;font-size:clamp(20px,1.8vw,24px);letter-spacing:-.02em;line-height:1.25}
+.outcomes li + li{padding-left:24px;border-left:1px solid var(--line)}
+
+/* solution + pass */
+.solution{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(40px,5vw,80px);align-items:center}
+.pass-stage{perspective:1200px;padding:12px 0}
+.pass{--rx:0deg;--ry:0deg;--gx:50%;--gy:30%;position:relative;width:100%;max-width:500px;margin:0 auto;aspect-ratio:1.586;border-radius:20px;padding:clamp(18px,2.6vw,28px);transform:rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;transition:transform .7s var(--ease);
+  background:radial-gradient(110% 90% at 0% 0%,rgba(94,234,212,.13),transparent 55%),radial-gradient(90% 90% at 100% 100%,rgba(80,120,190,.16),transparent 60%),linear-gradient(145deg,#111a26,#0a0f17 60%,#0d1420);
+  border:1px solid rgba(170,200,230,.16);box-shadow:0 1px 0 rgba(255,255,255,.07) inset,0 50px 90px -40px rgba(0,0,0,.95),0 30px 90px -50px rgba(94,234,212,.3);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;container-type:inline-size}
+.pass.live{transition:transform .12s linear}
+.pass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at var(--gx) var(--gy),rgba(255,255,255,.14),transparent 45%);mix-blend-mode:screen}
+.pass-top,.pass-bottom{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative;z-index:1}
+.pass-name{font-size:clamp(15px,4.2cqi,21px);letter-spacing:-.02em}
+.pass-name small{display:block;font-size:clamp(10px,2.4cqi,12px);color:var(--fg-3);letter-spacing:0;margin-top:2px}
+.pass-mark{width:clamp(26px,7cqi,34px);height:auto}
+.pass-fields{position:relative;z-index:1;display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(8px,2.4cqi,14px) clamp(12px,3cqi,20px)}
+.pass-fields dt{font-family:var(--font-mono);font-size:clamp(7.5px,1.8cqi,9.5px);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:2px}
+.pass-fields dd{font-size:clamp(11px,2.8cqi,14px);color:var(--fg);line-height:1.3}
+.pass-fields dd.ok{color:var(--accent)}
+.pass-bottom{align-items:flex-end}
+.pass-id{font-family:var(--font-mono);font-size:clamp(8px,1.9cqi,10px);color:var(--fg-3);letter-spacing:.04em}
+.pass-code{width:clamp(36px,11cqi,56px);height:clamp(36px,11cqi,56px);opacity:.85}
+.pass-caption{margin-top:24px;text-align:center;color:var(--fg-3);font-size:13.5px}
+
+/* flow */
+.flow{margin-top:clamp(48px,6vw,80px);padding:clamp(16px,3vw,40px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.flow svg{width:100%;height:auto}
+.flow .v{display:none}
+.flow text{font-family:var(--font-sans);fill:var(--fg);font-size:17px;letter-spacing:-.01em}
+.flow text.s{fill:var(--fg-3);font-size:13.5px;letter-spacing:0}
+.flow .base{fill:none;stroke:var(--line-2);stroke-width:1.2}
+.flow .draw{fill:none;stroke:var(--accent);stroke-width:1.3;stroke-linecap:round;opacity:.75}
+.js .flow .draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--ease)}
+.js .flow .draw.d2{transition-delay:.5s}.js .flow .draw.d3{transition-delay:1s}
+.js .flow.in .draw{stroke-dashoffset:0}
+.flow .node-c{fill:var(--bg);stroke:var(--line-3);stroke-width:1.2;transition:stroke .5s,fill .5s}
+.flow .node-c.on{stroke:var(--accent);fill:#0a1a1b}
+.flow .ico{fill:none;stroke:var(--fg-2);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:stroke .5s}
+.flow .ico.on{stroke:var(--accent)}
+.flow .dashed{fill:none;stroke:var(--line-3);stroke-dasharray:2 5}
+.flow .rules-t{fill:var(--fg-2);font-size:13px}
+.flow .pulse{fill:none;stroke:var(--accent);opacity:0}
+.flow-note{margin-top:28px;color:var(--fg-2);font-size:16px;font-weight:300}
+
+/* roadmap */
+.timeline{position:relative;display:grid;grid-template-columns:repeat(7,1fr);margin-top:clamp(56px,7vw,88px)}
+.timeline::before,.timeline::after{content:"";position:absolute;left:0;right:0;top:4px;height:1px;background:var(--line-2)}
+.timeline::after{background:var(--accent);opacity:.6;transform-origin:0 50%}
+.js .timeline::after{transform:scaleX(0);transition:transform 2.4s var(--ease)}
+.js .timeline.in::after{transform:scaleX(1)}
+.timeline li{position:relative;padding:36px 20px 0 0;font-size:16px;line-height:1.35;letter-spacing:-.01em}
+.timeline li::before{content:"";position:absolute;top:0;left:0;width:9px;height:9px;border-radius:50%;background:var(--bg);border:1px solid var(--line-3);transition:border-color .6s;transition-delay:calc(var(--i) * 280ms + 200ms)}
+.timeline.in li::before{border-color:var(--accent)}
+.timeline li span{display:block;color:var(--fg-3);font-size:13.5px;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.js .timeline li{opacity:0;transform:translateY(10px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--i) * 280ms)}
+.js .timeline.in li{opacity:1;transform:none}
+
+/* impact closing */
+.breath{margin-top:clamp(80px,10vw,140px);font-size:clamp(26px,3.3vw,44px);line-height:1.2;letter-spacing:-.03em;color:var(--fg-3);max-width:30ch;font-weight:300}
+.breath strong{color:var(--fg);font-weight:400}
+
+/* about + contact */
+.about-logos{margin-top:48px;padding-top:32px;border-top:1px solid var(--line)}
+.about-link{margin-top:32px}
+.link{color:var(--fg);text-decoration:none;background:linear-gradient(var(--fg),var(--fg)) 0 100%/0 1px no-repeat,linear-gradient(var(--line-3),var(--line-3)) 0 100%/100% 1px no-repeat;padding-bottom:3px;transition:background-size .5s var(--ease)}
+.link:hover{background-size:100% 1px,100% 1px}
+.people{margin-top:clamp(48px,6vw,72px);border-top:1px solid var(--line)}
+.people li{display:flex;justify-content:space-between;align-items:baseline;gap:16px 32px;flex-wrap:wrap;padding:28px 0;border-bottom:1px solid var(--line)}
+.people .name{font-size:clamp(22px,2.4vw,32px);letter-spacing:-.025em;line-height:1.1}
+.people a.mail{font-size:clamp(16px,1.4vw,19px);color:var(--fg-2);text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:color .3s}
+.people a.mail svg{width:15px;height:15px;transition:transform .4s var(--ease)}
+.people a.mail:hover{color:var(--accent)}
+.people a.mail:hover svg{transform:translate(2px,-2px)}
+
+/* footer */
+.site-footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:64px 0 40px}
+.foot{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap}
+.foot .sig{color:var(--fg-3);font-size:14.5px;margin-top:10px}
+.foot-bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);color:var(--fg-3);font-size:13.5px}
+.foot-bottom nav ul{display:flex;flex-wrap:wrap;gap:8px 24px}
+.foot-bottom a{color:var(--fg-3);text-decoration:none;transition:color .3s}
+.foot-bottom a:hover{color:var(--fg)}
+
+/* responsive */
+@media (max-width:1100px){
+  .nav-links,.nav-cta{display:none}
+  .menu-btn{display:inline-flex}
+  .nav-panel{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:rgba(5,8,13,.98);padding:24px var(--pad) 40px;overflow-y:auto;border-top:1px solid var(--line);display:none}
+  .nav-panel.open{display:block}
+  .nav-panel .nav-links{display:flex;flex-direction:column;align-items:stretch;gap:0}
+  .nav-panel .nav-links a{font-size:28px;letter-spacing:-.025em;padding:14px 0;border-bottom:1px solid var(--line);color:var(--fg)}
+  .nav-panel .nav-links a::after{display:none}
+  .nav-panel .nav-links a.active{color:var(--accent)}
+  .nav-panel .nav-cta{display:inline-flex;margin:32px 0 0}
+  .timeline{grid-template-columns:1fr;padding-left:2px}
+  .timeline::before,.timeline::after{left:4px;right:auto;top:6px;bottom:28px;width:1px;height:auto}
+  .timeline::after{transform-origin:50% 0}
+  .js .timeline::after{transform:scaleY(0)}
+  .js .timeline.in::after{transform:scaleY(1)}
+  .timeline li{padding:0 0 28px 36px}
+  .timeline li::before{top:6px}
+  .timeline li span{display:inline-block;width:32px;margin:0}
+}
+@media (min-width:1101px){.nav-panel{display:flex;align-items:center}}
+@media (max-width:980px){
+  .sec{grid-template-columns:1fr;gap:20px}
+  .sec-label{padding-top:0}
+  .solution{grid-template-columns:1fr}
+  .cols-3{grid-template-columns:1fr 1fr}
+  .hero canvas{opacity:.5}
+}
+@media (max-width:760px){
+  body{font-size:16px}
+  .flow .h{display:none}.flow .v{display:block;max-width:400px;margin:0 auto}
+  .cols-3,.cols-2,.outcomes{grid-template-columns:1fr}
+  .outcomes li,.outcomes li + li{padding:20px 0;border-left:0}
+  .outcomes li + li{border-top:1px solid var(--line)}
+  .rows > li{grid-template-columns:1fr;gap:6px;padding:22px 0}
+  .brand .by{display:none}
+  .hero::after{background:linear-gradient(180deg,rgba(5,8,13,.55),rgba(5,8,13,.8) 50%,var(--bg))}
+  .credits .wrap{gap:20px}
+  .logos{gap:22px 28px}
+  .logos .sep{display:none}
+  .logo-w3h{height:13px}.logo-polimi{height:38px}.logo-gsom{height:34px}
+}
+@media (max-width:520px){
+  .hero .ctas .btn{flex:1 1 100%;justify-content:center}
+  .pass{aspect-ratio:auto;gap:22px}
+  .people li{flex-direction:column;gap:8px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .js .reveal,.js .hero .fade,.js .hero h1 .w,.js .timeline li{opacity:1!important;transform:none!important;filter:none!important}
+  .js .flow .draw{stroke-dashoffset:0}
+  .js .timeline::after{transform:none}
+  .timeline li::before{border-color:var(--accent)}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#top" aria-label="Web3 Content, a WEB3HUB project — back to top">
+      <span>Web3 Content</span>
+      <span class="by"><img src="img/web3hub.png" alt="" width="480" height="72"></span>
+    </a>
+    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-panel"><span></span></button>
+    <div class="nav-panel" id="nav-panel">
+      <ul class="nav-links">
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#solution">Solution</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#principles">Principles</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+      <a class="btn btn-sm nav-cta" href="#contact">Get in touch</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <h1 id="hero-title">Access rights that <em>travel</em> across platforms.</h1>
+    <div class="hero-foot">
+      <p class="tagline fade d1"><strong>Open infrastructure for digital access rights.</strong>An open, interoperable and privacy-conscious protocol to issue, verify and recognise access across institutions, creators, venues and platforms.</p>
+      <div class="ctas fade d2">
+        <a class="btn btn-primary" href="#how-it-works">Explore the protocol <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </div>
+  <div class="credits fade d3">
+    <div class="wrap">
+      <p>A project by</p>
+      <div class="logos">
+        <a href="https://www.web3.polimi.it/" target="_blank" rel="noopener" aria-label="WEB3HUB (opens in a new tab)"><img class="logo-w3h" src="img/web3hub.png" alt="WEB3HUB" width="480" height="72"></a>
+        <span class="sep" aria-hidden="true"></span>
+        <img class="logo-polimi" src="img/polimi.png" alt="Politecnico di Milano" width="495" height="160">
+        <img class="logo-gsom" src="img/polimi-gsom.png" alt="POLIMI Graduate School of Management" width="321" height="160">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="problem" aria-labelledby="problem-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>The problem</span></p>
+    <div>
+      <h2 class="h2 reveal" id="problem-title">Cultural access is <span class="dim">locked into silos.</span></h2>
+      <p class="lead reveal">Access is tied to isolated platforms, proprietary accounts and subscriptions that don't interoperate. <strong>Audiences</strong> juggle separate providers; <strong>rights holders</strong> struggle to express permissions, share revenue and work across channels.</p>
+      <ul class="outcomes">
+        <li class="reveal" style="--i:0">Silos</li>
+        <li class="reveal" style="--i:1">Vendor lock-in</li>
+        <li class="reveal" style="--i:2">High barriers for new European players</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="solution" aria-labelledby="solution-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>The solution</span></p>
+    <div class="solution">
+      <div>
+        <h2 class="h2 reveal" id="solution-title">Shared infrastructure, <span class="dim">not another platform.</span></h2>
+        <p class="lead reveal">An open protocol that makes access rights and their conditions <strong>machine-readable and verifiable</strong>. One pass, recognised by every participating service — online, and in cinemas, theatres and festivals.</p>
+        <p class="lead reveal">Content and autonomy stay with each organisation. The protocol only adds the common layer.</p>
+      </div>
+      <div class="pass-stage reveal" id="pass-stage">
+        <article class="pass" id="pass" aria-label="Illustrative example of a digital access pass">
+          <div class="pass-top">
+            <p class="pass-name">Digital access pass</p>
+            <svg class="pass-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="6.5" y="9.5" width="19" height="13" rx="3" fill="none" stroke="#5eead4" stroke-width="1.5"/><circle cx="12" cy="16" r="2.2" fill="#5eead4"/><path d="M16.5 14h5M16.5 18h3.5" stroke="#5eead4" stroke-width="1.3" stroke-linecap="round"/></svg>
+          </div>
+          <dl class="pass-fields">
+            <div><dt>Rights holder</dt><dd>Cultural institution</dd></div>
+            <div><dt>Transferable</dt><dd class="ok">Yes</dd></div>
+            <div><dt>Offer</dt><dd>Festival bundle — film &amp; live</dd></div>
+            <div><dt>Valid until</dt><dd>T + 30 days</dd></div>
+            <div><dt>Scope</dt><dd>Online · In venue</dd></div>
+          </dl>
+          <div class="pass-bottom">
+            <p class="pass-id">wc·pass·7f3a…e21c</p>
+            <svg class="pass-code" id="pass-code" viewBox="0 0 13 13" aria-hidden="true"></svg>
+          </div>
+        </article>
+        <p class="pass-caption">Illustrative example</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how-it-works" aria-labelledby="how-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>How it works</span></p>
+    <div>
+      <h2 class="h2 reveal" id="how-title">Four elements, <span class="dim">one verifiable flow.</span></h2>
+      <ul class="cols cols-2">
+        <li class="reveal" style="--i:0"><h3>Rights holder</h3><p>Creates the offer and sets its rules.</p></li>
+        <li class="reveal" style="--i:1"><h3>Content offer</h3><p>A work, an experience or a bundle.</p></li>
+        <li class="reveal" style="--i:2"><h3>Authorised user</h3><p>Holds the pass.</p></li>
+        <li class="reveal" style="--i:3"><h3>Conditions</h3><p>Duration, scope, transfer or sharing, organisation rules.</p></li>
+      </ul>
+
+      <div class="flow" id="flow">
+        <svg class="h" viewBox="0 0 1000 380" role="img" aria-labelledby="flow-t">
+          <title id="flow-t">Issue, hold, present, verify: the organisation issues the pass, the user holds it and presents it online or at a venue, where it is verified against shared rules.</title>
+          <path class="base" d="M104 190H286M354 190H536"/>
+          <path class="base" d="M604 190C680 190 680 100 760 100M604 190C680 190 680 280 760 280"/>
+          <path class="draw" pathLength="1" d="M104 190H286"/>
+          <path class="draw d2" pathLength="1" d="M354 190H536"/>
+          <path class="draw d3" pathLength="1" d="M604 190C680 190 680 100 760 100"/>
+          <path class="draw d3" pathLength="1" d="M604 190C680 190 680 280 760 280"/>
+          <path class="route" fill="none" stroke="none" d="M70 190H570C680 190 680 100 760 100H860"/>
+          <path class="route" fill="none" stroke="none" d="M70 190H570C680 190 680 280 760 280H860"/>
+          <path class="dashed" d="M860 136V172M860 208V244"/>
+          <text class="rules-t" x="860" y="195" text-anchor="middle">shared rules</text>
+          <g data-stage="0"><circle class="node-c" cx="70" cy="190" r="34"/><path class="ico" d="M58 202V178h14l8 8v16zM72 178v8h8"/><text x="70" y="258" text-anchor="middle">Issue</text><text class="s" x="70" y="280" text-anchor="middle">Organisation</text></g>
+          <g data-stage="1"><circle class="node-c" cx="320" cy="190" r="34"/><path class="ico" d="M306 180h28v20h-28zM312 190h4M320 187h8M320 193h5"/><text x="320" y="258" text-anchor="middle">Hold</text><text class="s" x="320" y="280" text-anchor="middle">User</text></g>
+          <g data-stage="2"><circle class="node-c" cx="570" cy="190" r="34"/><path class="ico" d="M556 190h22M570 182l8 8-8 8M584 178v24"/><text x="570" y="258" text-anchor="middle">Present</text><text class="s" x="570" y="280" text-anchor="middle">Online or in venue</text></g>
+          <g data-stage="3"><rect class="node-c" x="760" y="64" width="200" height="72" rx="36"/><path class="ico" d="M790 90h24v18h-24zM790 96h24"/><text x="828" y="98">Verify</text><text class="s" x="828" y="117">Web service</text></g>
+          <g data-stage="4"><rect class="node-c" x="760" y="244" width="200" height="72" rx="36"/><path class="ico" d="M790 290v-12l12-7 12 7v12zM798 290v-7h8v7"/><text x="828" y="278">Verify</text><text class="s" x="828" y="297">Physical venue</text></g>
+          <circle class="pulse" r="34"/>
+          <g class="dot"><circle r="13" fill="rgba(94,234,212,.14)"/><rect x="-8" y="-5.5" width="16" height="11" rx="2.5" fill="#5eead4"/></g>
+        </svg>
+        <svg class="v" viewBox="0 0 360 640" role="img" aria-labelledby="flow-tv">
+          <title id="flow-tv">Issue, hold, present, then verification by a web service or a physical venue against shared rules.</title>
+          <path class="base" d="M70 94V186M70 254V346"/>
+          <path class="base" d="M70 414C70 470 90 470 90 520M70 414C70 470 270 460 270 520"/>
+          <path class="draw" pathLength="1" d="M70 94V186"/>
+          <path class="draw d2" pathLength="1" d="M70 254V346"/>
+          <path class="draw d3" pathLength="1" d="M70 414C70 470 90 470 90 520"/>
+          <path class="draw d3" pathLength="1" d="M70 414C70 470 270 460 270 520"/>
+          <path class="route" fill="none" stroke="none" d="M70 60V380C70 470 90 470 90 520V556"/>
+          <path class="route" fill="none" stroke="none" d="M70 60V380C70 470 270 460 270 520V556"/>
+          <path class="dashed" d="M90 594V612M270 594V612M90 612H130M230 612H270"/>
+          <text class="rules-t" x="180" y="617" text-anchor="middle">shared rules</text>
+          <g data-stage="0"><circle class="node-c" cx="70" cy="60" r="34"/><path class="ico" d="M58 72V48h14l8 8v16zM72 48v8h8"/><text x="126" y="56">Issue</text><text class="s" x="126" y="76">Organisation</text></g>
+          <g data-stage="1"><circle class="node-c" cx="70" cy="220" r="34"/><path class="ico" d="M56 210h28v20h-28zM62 220h4M70 217h8M70 223h5"/><text x="126" y="216">Hold</text><text class="s" x="126" y="236">User</text></g>
+          <g data-stage="2"><circle class="node-c" cx="70" cy="380" r="34"/><path class="ico" d="M56 380h22M70 372l8 8-8 8M84 368v24"/><text x="126" y="376">Present</text><text class="s" x="126" y="396">Online or in venue</text></g>
+          <g data-stage="3"><rect class="node-c" x="14" y="520" width="152" height="74" rx="37"/><text x="90" y="552" text-anchor="middle">Verify</text><text class="s" x="90" y="572" text-anchor="middle">Web service</text></g>
+          <g data-stage="4"><rect class="node-c" x="194" y="520" width="152" height="74" rx="37"/><text x="270" y="552" text-anchor="middle">Verify</text><text class="s" x="270" y="572" text-anchor="middle">Physical venue</text></g>
+          <circle class="pulse" r="34"/>
+          <g class="dot"><circle r="13" fill="rgba(94,234,212,.14)"/><rect x="-8" y="-5.5" width="16" height="11" rx="2.5" fill="#5eead4"/></g>
+        </svg>
+      </div>
+      <p class="flow-note reveal">Open interfaces for issuance, verification and provider integration.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="principles" aria-labelledby="principles-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>Principles</span></p>
+    <div>
+      <h2 class="h2 reveal" id="principles-title">Built to be adopted, <span class="dim">not owned.</span></h2>
+      <ul class="rows">
+        <li class="reveal"><h3>Open standard, not a platform</h3><p>Anyone can build compatible tools, without a central operator's permission.</p></li>
+        <li class="reveal"><h3>Ledger only where it helps</h3><p>Blockchain only where it adds integrity, traceability or verification — never as an end in itself.</p></li>
+        <li class="reveal"><h3>Privacy by design</h3><p>No unnecessary publication of personal data.</p></li>
+        <li class="reveal"><h3>No vendor lock-in</h3><p>Portability, open interfaces, independent deployment.</p></li>
+        <li class="reveal"><h3>Rights holders in control</h3><p>Institutions and creators keep their content and their rules.</p></li>
+        <li class="reveal"><h3>Interoperable by design</h3><p>Different implementations, the same common rules.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="benefits" aria-labelledby="benefits-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>Who benefits</span></p>
+    <div>
+      <h2 class="h2 reveal" id="benefits-title">Value on every side <span class="dim">of access.</span></h2>
+      <ul class="cols cols-3">
+        <li class="reveal" style="--i:0"><h3>Audiences</h3><p>Transfer, share or resell access when it's not in use.</p></li>
+        <li class="reveal" style="--i:1"><h3>Institutions &amp; rights holders</h3><p>Automated royalties on secondary transactions and transparent revenue sharing.</p></li>
+        <li class="reveal" style="--i:2"><h3>European platforms</h3><p>Lower barriers to entry, more competition and innovation.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="open" aria-labelledby="open-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>Open by default</span></p>
+    <div>
+      <h2 class="h2 reveal" id="open-title">Released as <span class="dim">digital commons.</span></h2>
+      <p class="lead reveal">Every output is published under a recognised free or open source licence.</p>
+      <ul class="rows">
+        <li class="reveal"><h3>Protocol specification</h3><p>The technical standard.</p></li>
+        <li class="reveal"><h3>Reference implementation</h3><p>Working code for the specification.</p></li>
+        <li class="reveal"><h3>Interoperability &amp; conformance</h3><p>Materials to check that implementations agree.</p></li>
+        <li class="reveal"><h3>Documentation &amp; guide</h3><p>Accessible to organisations with limited technical capacity.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="roadmap" aria-labelledby="roadmap-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>Roadmap</span></p>
+    <div>
+      <h2 class="h2 reveal" id="roadmap-title">From requirements <span class="dim">to v1.0.</span></h2>
+    </div>
+  </div>
+  <div class="wrap">
+    <ol class="timeline" id="timeline">
+      <li style="--i:0"><span>01</span>Requirements, privacy &amp; threat model</li>
+      <li style="--i:1"><span>02</span>Protocol specification</li>
+      <li style="--i:2"><span>03</span>Issuer reference implementation</li>
+      <li style="--i:3"><span>04</span>Verifier reference implementation, web &amp; venue</li>
+      <li style="--i:4"><span>05</span>Optional ledger module</li>
+      <li style="--i:5"><span>06</span>Interoperability tests &amp; live demo</li>
+      <li style="--i:6"><span>07</span>Documentation &amp; v1.0 release</li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="impact" aria-labelledby="impact-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>Expected impact</span></p>
+    <div>
+      <h2 class="h2 reveal" id="impact-title">A stronger, fairer <span class="dim">European cultural ecosystem.</span></h2>
+      <ul class="cols cols-2">
+        <li class="reveal" style="--i:0"><h3>Ecosystem strengthening</h3><p>A connected network of European institutions and platforms.</p></li>
+        <li class="reveal" style="--i:1"><h3>Innovation leadership</h3><p>Shared standards for distribution and rights management.</p></li>
+        <li class="reveal" style="--i:2"><h3>Economic fairness</h3><p>Transparent compensation for creators and organisations.</p></li>
+        <li class="reveal" style="--i:3"><h3>Access and visibility</h3><p>Integrated experiences and more discoverable European content.</p></li>
+      </ul>
+      <p class="breath reveal">Culture is the first use case <strong>of a broader open model for verifiable access — wherever independent services need to cooperate without centralising control.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>About</span></p>
+    <div>
+      <h2 class="h2 reveal" id="about-title">Developed by WEB3HUB, <span class="dim">Politecnico di Milano.</span></h2>
+      <p class="lead reveal">WEB3HUB is Politecnico di Milano's research group on blockchain and Web3. It brings together the Blockchain &amp; Web3 Observatory and an independent lab that develops projects in a pre-competitive setting.</p>
+      <div class="about-logos reveal">
+        <div class="logos">
+          <a href="https://www.web3.polimi.it/" target="_blank" rel="noopener" aria-label="WEB3HUB (opens in a new tab)"><img class="logo-w3h" src="img/web3hub.png" alt="WEB3HUB" width="480" height="72" loading="lazy"></a>
+          <span class="sep" aria-hidden="true"></span>
+          <img class="logo-polimi" src="img/polimi.png" alt="Politecnico di Milano" width="495" height="160" loading="lazy">
+          <img class="logo-gsom" src="img/polimi-gsom.png" alt="POLIMI Graduate School of Management" width="321" height="160" loading="lazy">
+        </div>
+      </div>
+      <p class="about-link reveal"><a class="link" href="https://www.web3.polimi.it/" target="_blank" rel="noopener">web3.polimi.it ↗</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact" aria-labelledby="contact-title">
+  <div class="wrap sec">
+    <p class="sec-label"><span>Contact</span></p>
+    <div>
+      <h2 class="h2 reveal" id="contact-title">Get in touch.</h2>
+      <p class="lead reveal">For questions, collaborations or a walkthrough of the protocol.</p>
+      <ul class="people">
+        <li class="reveal" style="--i:0"><span class="name">Ettore Zauli</span><a class="mail" href="mailto:ettore.zauli@polimi.it?subject=Web3%20Content">ettore.zauli@polimi.it <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12L12 4M6 4h6v6"/></svg></a></li>
+        <li class="reveal" style="--i:1"><span class="name">Jacopo Fracassi</span><a class="mail" href="mailto:jacopo.fracassi@polimi.it?subject=Web3%20Content">jacopo.fracassi@polimi.it <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12L12 4M6 4h6v6"/></svg></a></li>
+        <li class="reveal" style="--i:2"><span class="name">Leonardo Agostini</span><a class="mail" href="mailto:leonardo.agostini@polimi.it?subject=Web3%20Content">leonardo.agostini@polimi.it <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12L12 4M6 4h6v6"/></svg></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <p class="brand">Web3 Content</p>
+        <p class="sig">Open infrastructure for digital access rights.</p>
+      </div>
+      <a class="link" href="#top">Back to top ↑</a>
+    </div>
+    <div class="foot-bottom">
+      <span>A WEB3HUB project · Politecnico di Milano</span>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#problem">Problem</a></li><li><a href="#solution">Solution</a></li><li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#principles">Principles</a></li><li><a href="#roadmap">Roadmap</a></li><li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var mqReduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var reduce=mqReduce.matches;
+
+  /* hero title: split into words */
+  var h1=document.getElementById('hero-title');
+  if(h1 && !reduce){
+    var idx=0;
+    (function split(node){
+      Array.prototype.slice.call(node.childNodes).forEach(function(n){
+        if(n.nodeType===3){
+          var frag=document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function(part){
+            if(!part) return;
+            if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part));return;}
+            var s=document.createElement('span');s.className='w';s.style.setProperty('--i',idx++);s.textContent=part;frag.appendChild(s);
+          });
+          n.parentNode.replaceChild(frag,n);
+        } else if(n.nodeType===1){split(n);}
+      });
+    })(h1);
+  }
+
+  /* header, progress, active nav */
+  var header=document.querySelector('.site-header');
+  var bar=document.querySelector('.progress span');
+  var ticking=false;
+  function onScroll(){
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(function(){
+      var y=window.scrollY, max=document.documentElement.scrollHeight-window.innerHeight;
+      header.classList.toggle('scrolled',y>20);
+      bar.style.transform='scaleX('+(max>0?Math.min(1,y/max):0)+')';
+      ticking=false;
+    });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  var links=Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  function setActive(id){
+    links.forEach(function(a){
+      var on=!!id && a.getAttribute('href')==='#'+id;
+      a.classList.toggle('active',on);
+      if(on) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current');
+    });
+  }
+  if('IntersectionObserver' in window){
+    var map={};
+    links.forEach(function(a){map[a.getAttribute('href').slice(1)]=1;});
+    var navIO=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting) setActive(map[e.target.id]?e.target.id:null); });
+    },{rootMargin:'-45% 0px -54% 0px'});
+    document.querySelectorAll('main > section').forEach(function(s){navIO.observe(s);});
+  }
+
+  /* mobile menu */
+  var btn=document.querySelector('.menu-btn'), panel=document.getElementById('nav-panel');
+  function setMenu(open){
+    btn.setAttribute('aria-expanded',String(open));
+    btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    panel.classList.toggle('open',open);
+    document.body.style.overflow=open?'hidden':'';
+  }
+  btn.addEventListener('click',function(){setMenu(btn.getAttribute('aria-expanded')!=='true');});
+  panel.addEventListener('click',function(e){ if(e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && btn.getAttribute('aria-expanded')==='true'){setMenu(false);btn.focus();} });
+  window.addEventListener('resize',function(){ if(window.innerWidth>1100) setMenu(false); });
+
+  /* scroll reveal */
+  var revealEls=document.querySelectorAll('.reveal, .timeline, .flow');
+  if(reduce || !('IntersectionObserver' in window)){
+    Array.prototype.forEach.call(revealEls,function(el){el.classList.add('in');});
+  } else {
+    var rio=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); rio.unobserve(e.target);} });
+    },{rootMargin:'0px 0px -10% 0px',threshold:0.08});
+    Array.prototype.forEach.call(revealEls,function(el){rio.observe(el);});
+  }
+
+  /* pass: code pattern + 3D tilt */
+  var code=document.getElementById('pass-code');
+  if(code){
+    var seed=0x7f3a, out='';
+    var rnd=function(){seed=(seed*16807)%2147483647;return seed/2147483647;};
+    for(var y=0;y<13;y++)for(var x=0;x<13;x++){
+      var fx=x>8?x-10:x, fy=y>8?y-10:y, finder=(fx>=0&&fx<3&&fy>=0&&fy<3)&&!(x>8&&y>8), sep=(x===3||x===9||y===3||y===9)&&(x<4||x>8)&&(y<4||y>8)&&!(x>8&&y>8);
+      var on=finder?!(fx===1&&fy===1):(sep?false:rnd()>.55);
+      if(on) out+='<rect x="'+x+'" y="'+y+'" width="1" height="1" rx=".2"/>';
+    }
+    code.innerHTML='<g fill="#a9b5c3">'+out+'</g>';
+  }
+  var stage=document.getElementById('pass-stage'), card=document.getElementById('pass');
+  if(stage && card && !reduce && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    var raf=0;
+    stage.addEventListener('pointermove',function(e){
+      var r=card.getBoundingClientRect();
+      var px=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)), py=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height));
+      cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(function(){
+        card.classList.add('live');
+        card.style.setProperty('--ry',((px-.5)*20).toFixed(2)+'deg');
+        card.style.setProperty('--rx',(-(py-.5)*14).toFixed(2)+'deg');
+        card.style.setProperty('--gx',(px*100).toFixed(1)+'%');
+        card.style.setProperty('--gy',(py*100).toFixed(1)+'%');
+      });
+    });
+    stage.addEventListener('pointerleave',function(){
+      cancelAnimationFrame(raf);
+      card.classList.remove('live');
+      card.style.setProperty('--rx','0deg');card.style.setProperty('--ry','0deg');
+      card.style.setProperty('--gx','50%');card.style.setProperty('--gy','30%');
+    });
+  }
+
+  /* how it works: pass travelling along the flow */
+  function initFlow(svg){
+    var routes=svg.querySelectorAll('.route'), dot=svg.querySelector('.dot'), pulse=svg.querySelector('.pulse');
+    var stages=Array.prototype.map.call(svg.querySelectorAll('[data-stage]'),function(g){
+      var c=g.querySelector('.node-c'), b=c.getBBox();
+      return {el:c,ico:g.querySelector('.ico'),x:b.x+b.width/2,y:b.y+b.height/2,big:b.width>80};
+    });
+    var data=Array.prototype.map.call(routes,function(p,ri){
+      var L=p.getTotalLength(), marks=[];
+      (ri===0?[0,1,2,3]:[0,1,2,4]).forEach(function(si){
+        var best=0,bd=1e9;
+        for(var i=0;i<=200;i++){var pt=p.getPointAtLength(L*i/200),d=Math.hypot(pt.x-stages[si].x,pt.y-stages[si].y);if(d<bd){bd=d;best=i/200;}}
+        marks.push({f:best,s:si});
+      });
+      return {p:p,L:L,marks:marks};
+    });
+    var t0=0, route=0, hit={}, running=false, rafId=0, DUR=5600;
+    function light(si){
+      stages.forEach(function(s,i){var on=i===si;s.el.classList.toggle('on',on);if(s.ico)s.ico.classList.toggle('on',on);});
+      var s=stages[si];
+      pulse.setAttribute('cx',s.x);pulse.setAttribute('cy',s.y);
+      if(pulse.animate) pulse.animate([{r:s.big?40:34,opacity:.6,strokeWidth:1.5},{r:s.big?100:70,opacity:0,strokeWidth:.5}],{duration:1200,easing:'cubic-bezier(.2,.7,.1,1)'});
+    }
+    function frame(now){
+      if(!running) return;
+      if(!t0) t0=now;
+      var f=(now-t0)/DUR;
+      if(f>=1.25){t0=now;f=0;route=1-route;hit={};}
+      var d=data[route], e=Math.min(1,f);
+      var pt=d.p.getPointAtLength(d.L*e);
+      dot.setAttribute('transform','translate('+pt.x.toFixed(1)+' '+pt.y.toFixed(1)+')');
+      d.marks.forEach(function(m){ if(!hit[m.s] && e>=m.f-0.004){hit[m.s]=1;light(m.s);} });
+      rafId=requestAnimationFrame(frame);
+    }
+    function start(){ if(running) return; running=true; t0=0; rafId=requestAnimationFrame(frame); }
+    function stop(){ running=false; cancelAnimationFrame(rafId); }
+    if(reduce){
+      var d=data[0], pt=d.p.getPointAtLength(d.L*d.marks[2].f);
+      dot.setAttribute('transform','translate('+pt.x+' '+pt.y+')');
+      stages[2].el.classList.add('on');
+      return;
+    }
+    var io=new IntersectionObserver(function(en){ en.forEach(function(x){ (x.isIntersecting && getComputedStyle(svg).display!=='none')?start():stop(); }); },{threshold:.15});
+    io.observe(svg);
+    document.addEventListener('visibilitychange',function(){ if(document.hidden) stop(); });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.flow svg'),function(svg){
+    try{
+      if(getComputedStyle(svg).display==='none'){
+        var mq=window.matchMedia(svg.classList.contains('h')?'(min-width:761px)':'(max-width:760px)');
+        var once=function(){ if(mq.matches){ mq.removeEventListener('change',once); initFlow(svg);} };
+        mq.addEventListener('change',once);
+      } else initFlow(svg);
+    }catch(err){}
+  });
+
+  /* hero network canvas */
+  var cv=document.getElementById('net');
+  if(!cv || !cv.getContext) return;
+  var ctx=cv.getContext('2d');
+  var hero=cv.parentNode, W=0, H=0, DPR=1;
+  var nodes=[], edges=[], majors=[], adj={};
+  var LABELS=['Streaming','Theatre','Festival','Cinema','Platform','Venue','Web service','Creator','Archive'];
+  var mouse={x:0,y:0,tx:0,ty:0};
+  var tok=null, pulses=[], trails=[];
+  var ACC='94,234,212';
+
+  var glow=document.createElement('canvas'); glow.width=glow.height=96;
+  (function(){var g=glow.getContext('2d'),gr=g.createRadialGradient(48,48,0,48,48,48);gr.addColorStop(0,'rgba('+ACC+',.45)');gr.addColorStop(.35,'rgba('+ACC+',.1)');gr.addColorStop(1,'rgba('+ACC+',0)');g.fillStyle=gr;g.fillRect(0,0,96,96);})();
+
+  function prng(s){return function(){s=(s*16807)%2147483647;return (s-1)/2147483646;};}
+
+  function build(){
+    var r=hero.getBoundingClientRect();
+    W=r.width; H=r.height; DPR=Math.min(window.devicePixelRatio||1,1.75);
+    cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    var rand=prng(1337), wide=W>980;
+    var x0=wide?Math.max(W*0.56,720):W*0.04, x1=W*0.97, y0=H*0.13, y1=H*(wide?0.72:0.9);
+    nodes=[]; majors=[];
+    function place(n,minD,major){
+      var tries=0;
+      while(n>0 && tries<4000){
+        tries++;
+        var p={x:x0+rand()*(x1-x0),y:y0+rand()*(y1-y0)};
+        var ok=nodes.every(function(q){return Math.hypot(q.x-p.x,q.y-p.y)>(q.major&&major?minD:minD*0.7);});
+        if(!ok) continue;
+        p.major=major; p.z=major?0.6+rand()*0.4:0.15+rand()*0.6; p.ph=rand()*6.28; p.vt=-1e9;
+        if(major){p.label=LABELS[majors.length%LABELS.length];majors.push(nodes.length);}
+        nodes.push(p); n--;
+      }
+    }
+    var area=(x1-x0)*(y1-y0), nMaj=wide?9:6;
+    place(nMaj,Math.sqrt(area/nMaj)*0.62,true);
+    place(Math.round(area/11000),Math.sqrt(11000)*0.55,false);
+    edges=[]; adj={};
+    var seen={};
+    function link(i,j,maj){var k=i<j?i+'-'+j:j+'-'+i;if(seen[k])return;seen[k]=1;edges.push({a:i,b:j,maj:maj});}
+    nodes.forEach(function(n,i){
+      nodes.map(function(m,j){return {j:j,d:Math.hypot(m.x-n.x,m.y-n.y)};}).filter(function(o){return o.j!==i;}).sort(function(a,b){return a.d-b.d;}).slice(0,2).forEach(function(o){link(i,o.j,false);});
+    });
+    majors.forEach(function(i){
+      adj[i]=adj[i]||[];
+      majors.filter(function(j){return j!==i;}).map(function(j){return {j:j,d:Math.hypot(nodes[j].x-nodes[i].x,nodes[j].y-nodes[i].y)};}).sort(function(a,b){return a.d-b.d;}).slice(0,3).forEach(function(o){
+        link(i,o.j,true);
+        adj[o.j]=adj[o.j]||[];
+        if(adj[i].indexOf(o.j)<0) adj[i].push(o.j);
+        if(adj[o.j].indexOf(i)<0) adj[o.j].push(i);
+      });
+    });
+    tok={from:majors[0],to:adj[majors[0]][0],t:0,dwell:0};
+    pulses=[]; trails=[];
+  }
+
+  function pos(n,now){
+    var k=n.z*16;
+    return {x:n.x+mouse.x*k+Math.sin(now*0.00025+n.ph)*3*n.z, y:n.y+mouse.y*k+Math.cos(now*0.0002+n.ph)*3*n.z};
+  }
+
+  function step(now,dt){
+    mouse.x+=(mouse.tx-mouse.x)*0.05; mouse.y+=(mouse.ty-mouse.y)*0.05;
+    if(tok.dwell>0){ tok.dwell-=dt; if(tok.dwell<=0){ var opts=adj[tok.to].filter(function(j){return j!==tok.from;}); if(!opts.length) opts=adj[tok.to]; tok.from=tok.to; tok.to=opts[Math.floor(Math.random()*opts.length)]; tok.t=0; } return; }
+    var a=nodes[tok.from], b=nodes[tok.to];
+    tok.t+=dt/Math.max(1000,Math.hypot(b.x-a.x,b.y-a.y)*7.5);
+    if(tok.t>=1){
+      tok.t=1; tok.dwell=800;
+      b.vt=now; pulses.push({n:tok.to,t:now});
+      trails.push({a:tok.from,b:tok.to,t:now});
+      if(trails.length>4) trails.shift();
+    }
+  }
+
+  function draw(now){
+    ctx.clearRect(0,0,W,H);
+    var P=nodes.map(function(n){return pos(n,now);});
+    ctx.lineWidth=1;
+    for(var i=0;i<edges.length;i++){
+      var e=edges[i], a=P[e.a], b=P[e.b];
+      ctx.strokeStyle=e.maj?'rgba(170,195,225,.12)':'rgba(170,195,225,.06)';
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    }
+    trails.forEach(function(tr){
+      var age=(now-tr.t)/4000; if(age>1) return;
+      var a=P[tr.a], b=P[tr.b];
+      ctx.strokeStyle='rgba('+ACC+','+(0.3*(1-age)).toFixed(3)+')';
+      ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    });
+    var pa=P[tok.from], pb=P[tok.to], te=tok.t<.5?2*tok.t*tok.t:1-Math.pow(-2*tok.t+2,2)/2;
+    var cx=pa.x+(pb.x-pa.x)*te, cy=pa.y+(pb.y-pa.y)*te;
+    var g=ctx.createLinearGradient(pa.x,pa.y,cx,cy);
+    g.addColorStop(0,'rgba('+ACC+',0)');g.addColorStop(1,'rgba('+ACC+',.8)');
+    ctx.strokeStyle=g;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(cx,cy);ctx.stroke();
+    ctx.font='400 12px "Inter Tight", system-ui, sans-serif';
+    for(var k=0;k<nodes.length;k++){
+      var n=nodes[k], p=P[k];
+      if(!n.major){
+        ctx.fillStyle='rgba(170,195,225,'+(0.15+n.z*0.3).toFixed(2)+')';
+        ctx.beginPath();ctx.arc(p.x,p.y,0.8+n.z*1.1,0,6.283);ctx.fill();
+        continue;
+      }
+      var since=now-n.vt, lit=since<2400?1-since/2400:0;
+      if(lit>0){ctx.globalAlpha=lit;ctx.drawImage(glow,p.x-48,p.y-48);ctx.globalAlpha=1;}
+      ctx.fillStyle='#070b11';
+      ctx.strokeStyle=lit>0?'rgba('+ACC+','+(0.35+lit*0.65).toFixed(2)+')':'rgba(170,195,225,.3)';
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(p.x,p.y,5,0,6.283);ctx.fill();ctx.stroke();
+      ctx.fillStyle=lit>0?'rgba('+ACC+',1)':'rgba(170,195,225,.55)';
+      ctx.beginPath();ctx.arc(p.x,p.y,1.6,0,6.283);ctx.fill();
+      ctx.fillStyle=lit>0?'rgba(237,242,247,'+(0.5+lit*0.4).toFixed(2)+')':'rgba(140,155,175,.5)';
+      ctx.fillText(n.label,p.x+12,p.y+4);
+    }
+    pulses=pulses.filter(function(pu){
+      var t=(now-pu.t)/1400; if(t>1) return false;
+      var p=P[pu.n];
+      ctx.strokeStyle='rgba('+ACC+','+(0.6*(1-t)).toFixed(3)+')';ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(p.x,p.y,6+t*38,0,6.283);ctx.stroke();
+      return true;
+    });
+    ctx.drawImage(glow,cx-48,cy-48);
+    ctx.save();ctx.translate(cx,cy);
+    ctx.fillStyle='#0b1a1c';ctx.strokeStyle='rgba('+ACC+',1)';ctx.lineWidth=1.1;
+    ctx.beginPath();
+    if(ctx.roundRect) ctx.roundRect(-10,-6.5,20,13,3); else ctx.rect(-10,-6.5,20,13);
+    ctx.fill();ctx.stroke();
+    ctx.fillStyle='rgba('+ACC+',1)';ctx.beginPath();ctx.arc(-4.5,0,1.7,0,6.283);ctx.fill();
+    ctx.fillRect(-0.5,-2.2,7,1.1);ctx.fillRect(-0.5,1,4.5,1.1);
+    ctx.restore();
+  }
+
+  var running=false, rafId=0, last=0;
+  function loop(now){
+    if(!running) return;
+    var dt=last?Math.min(64,now-last):16; last=now;
+    step(now,dt); draw(now);
+    rafId=requestAnimationFrame(loop);
+  }
+  function start(){ if(running||reduce) return; running=true; last=0; rafId=requestAnimationFrame(loop); }
+  function stop(){ running=false; cancelAnimationFrame(rafId); }
+  function still(){ tok.t=1; nodes[tok.to].vt=performance.now(); draw(performance.now()); }
+
+  build();
+  if(reduce){ still(); }
+  else {
+    var visible=true;
+    new IntersectionObserver(function(en){ visible=en[0].isIntersecting; (visible&&!document.hidden)?start():stop(); }).observe(hero);
+    document.addEventListener('visibilitychange',function(){ (document.hidden||!visible)?stop():start(); });
+    hero.addEventListener('pointermove',function(e){
+      var r=hero.getBoundingClientRect();
+      mouse.tx=((e.clientX-r.left)/r.width-.5)*2; mouse.ty=((e.clientY-r.top)/r.height-.5)*2;
+    });
+    hero.addEventListener('pointerleave',function(){mouse.tx=0;mouse.ty=0;});
+  }
+  var rt=0, lastW=window.innerWidth;
+  window.addEventListener('resize',function(){
+    clearTimeout(rt);
+    rt=setTimeout(function(){
+      if(Math.abs(window.innerWidth-lastW)<2 && Math.abs(hero.getBoundingClientRect().height-H)<120) return;
+      lastW=window.innerWidth; build();
+      if(reduce) still();
+    },150);
+  });
+  if(mqReduce.addEventListener) mqReduce.addEventListener('change',function(){ location.reload(); });
+})();
+</script>
+</body>
+</html>

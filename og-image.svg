@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="g" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0H0V60" fill="none" stroke="rgba(160,190,220,.07)"/></pattern>
+    <radialGradient id="r" cx="80%" cy="20%" r="70%"><stop offset="0" stop-color="#5eead4" stop-opacity=".16"/><stop offset="1" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+    <radialGradient id="dot" r="50%"><stop offset="0" stop-color="#5eead4" stop-opacity=".5"/><stop offset="1" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#05080d"/>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <rect width="1200" height="630" fill="url(#r)"/>
+  <g stroke="rgba(160,190,220,.16)" fill="none">
+    <path d="M760 150L900 110L1060 190L980 330L820 300L760 150M900 110L980 330M820 300L700 420L880 470L980 330M880 470L1080 430L1060 190"/>
+  </g>
+  <path d="M760 150L900 110L1060 190" stroke="#5eead4" stroke-opacity=".7" stroke-width="1.6" fill="none"/>
+  <g fill="#070b11" stroke="rgba(160,190,220,.45)">
+    <circle cx="760" cy="150" r="6"/><circle cx="820" cy="300" r="6"/><circle cx="980" cy="330" r="6"/><circle cx="700" cy="420" r="6"/><circle cx="880" cy="470" r="6"/><circle cx="1080" cy="430" r="6"/>
+  </g>
+  <g fill="#070b11" stroke="#5eead4"><circle cx="900" cy="110" r="6"/><circle cx="1060" cy="190" r="6"/></g>
+  <circle cx="1060" cy="190" r="40" fill="url(#dot)"/>
+  <circle cx="1060" cy="190" r="26" fill="none" stroke="#5eead4" stroke-opacity=".4"/>
+  <g font-family="JetBrains Mono, monospace" font-size="13" letter-spacing="1.5" fill="#808ea0">
+    <text x="774" y="140">STREAMING</text><text x="914" y="100">THEATRE</text><text x="1080" y="176" fill="#5eead4">✓ VERIFIED</text>
+    <text x="834" y="290">CINEMA</text><text x="894" y="490">FESTIVAL</text>
+  </g>
+  <g transform="translate(80 92)">
+    <rect width="36" height="36" rx="9" fill="#0a1019" stroke="rgba(160,190,220,.25)"/>
+    <rect x="7.5" y="11.5" width="21" height="14" rx="3" fill="none" stroke="#5eead4" stroke-width="1.7"/>
+    <circle cx="13.5" cy="18.5" r="2.4" fill="#5eead4"/><path d="M18.5 16.5h6M18.5 21h4" stroke="#5eead4" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="52" y="25" font-family="Inter Tight, Inter, sans-serif" font-size="22" font-weight="600" fill="#eaf0f6">Web3 Content</text>
+  </g>
+  <text x="80" y="200" font-family="JetBrains Mono, monospace" font-size="15" letter-spacing="2" fill="#5eead4">OPEN INFRASTRUCTURE FOR DIGITAL ACCESS RIGHTS</text>
+  <g font-family="Inter Tight, Inter, sans-serif" font-size="78" font-weight="500" letter-spacing="-3.2" fill="#eaf0f6">
+    <text x="76" y="300">Access rights</text><text x="76" y="384">that <tspan fill="#5eead4">travel</tspan> across</text><text x="76" y="468">platforms.</text>
+  </g>
+  <path d="M80 540H1120" stroke="rgba(160,190,220,.14)"/>
+  <text x="80" y="580" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="1.8" fill="#aab6c4">A WEB3HUB PROJECT · POLITECNICO DI MILANO</text>
+  <text x="1120" y="580" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="1.8" fill="#808ea0">OPEN · INTEROPERABLE · PRIVACY BY DESIGN</text>
+</svg>
