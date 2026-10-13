@@ -28,4 +28,4 @@ then visit <http://localhost:3000>.
 
 ## Live site
 
-_Coming soon._
+<https://web3-content.vercel.app>
